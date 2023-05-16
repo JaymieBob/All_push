@@ -36,3 +36,40 @@ Step 5: vgextend rhel_vcash-leg5-ahv /dev/sdb1
 Step 6: lvresize -L +499G /dev/rhel_vcash-leg7-ahv/root
 
 Step 7: xfs_growfs /dev/rhel_vcash-leg7-ahv/root
+
+--------------Old Portal-------------(.93)
+FROM NUTANIC CONSOLE
+---------------------
+Step 1: Attach new disk 300G
+
+FROM OS
+-------
+
+Step 2: fdsik -l
+
+Step 3: fdisk /dev/sdb
+
+	a. n
+	b. p
+	c. 1
+	d. t
+	e. 8e
+	f. w
+
+Step 4: pvcreate /dev/sdb1
+
+Step 5: vgcreate datavg /dev/sdb1
+
+Step 6: lvcreate -L +200G -n datalv datavg
+
+Step 7: mkfs.xfs /dev/datavg/datalv
+
+Step 8: mkdir /tomcatLog2
+
+Step 9: vi /etc/fstab
+
+/dev/datavg/datalv	/tomcatLog2	xfs	defaults	1 2
+
+Step 10: mount -a
+
+Step 11: df -h
