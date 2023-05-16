@@ -1,0 +1,12 @@
+=============telnet installation============
+
+
+1. dnf install telnet
+
+2. firewall-cmd --add-service=telnet --zone=public
+
+3. firewall-cmd --add-service=telnet --zone=public --permanent
+
+4. systemctl start telnet.socket
+
+5. systemctl enable telnet.socket
