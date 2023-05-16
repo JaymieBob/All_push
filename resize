@@ -1,0 +1,38 @@
+REDHAT
+
+Step 1: Attach another disk
+
+Step 2: confirm the disk; fdsik -l
+
+Step 3: fdisk /dev/sdb
+
+	a. n new
+	b. p physical disk
+	c. 1 partition 1
+	d. t create table
+	e. 8e for LVM partition
+	f. w to save
+
+Step 4: pvcreate /dev/sdb1
+
+Step 5: vgcreate rhel_vcash-leg6-ahv /dev/sdb1
+
+Step 6: lvcreate -L (size) -n (LV-name) (VG-name)
+
+Step 6: mkfs.ext4 /dev/sdb1
+
+Step 7: blkid /dev/sdb1 (To identify the UUId)
+
+Step 8: mkdir /mount_point_for_sdb1 (create a mount point for the FS)
+
+Step 9: mount -t ext4 /dev/sdb1 /mount_point_for_sdb1 or mount /dev/mapper/vg01-data /data/
+
+Step 10: edit /etc/fstab and add new disk details.
+
+Increasing Filesystem
+
+Step 5: vgextend rhel_vcash-leg5-ahv /dev/sdb1
+
+Step 6: lvresize -L +499G /dev/rhel_vcash-leg7-ahv/root
+
+Step 7: xfs_growfs /dev/rhel_vcash-leg7-ahv/root
