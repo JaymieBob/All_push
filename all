@@ -1,0 +1,52 @@
+================================================
+How to Install Zabbix Agent on RHEL 6 & RHEL 8
+================================================
+Step 1 – Add Required Repository:
+Before installing Zabbix Agent first configure Zabbix yum repository using following commands:
+
+e.g
+wget --no-check-certificate https://repo.zabbix.com/zabbix/4.0/rhel/6/x86_64/zabbix-release-4.0-1.el6.noarch.rpm
+rpm -ivh zabbix-release-4.0-1.el6.noarch.rpm   (For RHEL 6)
+
+dnf install https://repo.zabbix.com/zabbix/4.4/rhel/8/x86_64/zabbix-release-4.4-1.el8.noarch.rpm
+(For RHEL 8)
+
+
+Step 2 – Install Zabbix Agent:
+After installing yum repository packages, install Zabbix agent on RedHat systems using the yum package manager.
+
+e.g
+# yum install zabbix zabbix-agent (For rhel 6)
+dnf install zabbix-agent(For rhel 8)
+
+Step 3 – Zabbix Agent Configuration: 
+Now we just need to configure Zabbix agent by adding Zabbix server IP to the configuration file /etc/zabbix/zabbix_agentd.conf
+
+#Server=192.168.123.19
+#Hostname=zabbix-virtual-machine
+
+e.g
+Server=192.168.123.19
+Hostname=zabbix-virtual-machine
+
+Step 4 – Open Port:
+Zabbix agent uses 10050/tcp port.
+
+e.g
+# iptables -A INPUT -p tcp -s 192.168.123.19 --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+Step 5 - Set SELinux to permissive by running setenforce 0
+
+Step 6 – Restarting Zabbix Agent:
+After adding Zabbix server IP to the configuration file, now restart agent service to reload the new settings, using the following command.
+
+e.g
+# service zabbix-agent restart
+
+To start and stop zabbix-agent service anytime use following commands.
+
+e.g
+service zabbix-agent start
+service zabbix-agent stop
+============================================CONGRATULATION ZABBIX SUCCESSFULLY INSTALLED==========================================
+
